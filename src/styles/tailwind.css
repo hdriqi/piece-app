@@ -18852,6 +18852,14 @@ body {
   background-color: rgba(247, 244, 237, var(--bg-opacity));
 }
 
+textarea {
+  resize: none;
+}
+
+textarea:focus {
+  outline: 0;
+}
+
 @media (min-width: 640px){
   .sm\:container{
     width: 100%;

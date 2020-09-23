@@ -13,3 +13,11 @@ html {
 body {
 	@apply bg-secondary-color;
 }
+
+textarea {
+	@apply resize-none;
+}
+
+textarea:focus {
+	@apply outline-none;
+}
