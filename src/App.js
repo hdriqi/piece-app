@@ -4,8 +4,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import './styles/tailwind.css'
 
-import ExplorePage from './pages/explore'
-import HomePage from './pages/home'
+import ExplorePage from './pages/Explore'
+import HomePage from './pages/Home'
+import ProfilePage from './pages/Profile'
 
 export default function App() {
 	return (
@@ -16,6 +17,9 @@ export default function App() {
 				</Route>
 				<Route path="/explore" exact>
 					<ExplorePage />
+				</Route>
+				<Route path="/:userId" exact>
+					<ProfilePage />
 				</Route>
 			</Switch>
 		</BrowserRouter>
