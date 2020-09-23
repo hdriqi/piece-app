@@ -64,3 +64,7 @@ export function getAccountId() {
 export function contractGetReward(params) {
 	return window.contract.getReward(params)
 }
+
+export function contractUpdateProfile(params) {
+	return window.contract.updateProfile(params)
+}

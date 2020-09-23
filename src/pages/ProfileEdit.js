@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ImgCrop from '../components/ImgCrop'
-import Nav from '../components/Nav'
+import { contractUpdateProfile } from '../near'
+import { upload } from '../skynet'
 
 let user = {
 	id: 'janedoe.testnet',
@@ -12,28 +13,45 @@ let user = {
 
 const ProfileEditPage = ({}) => {
 	const [bio, setBio] = useState(user.bio || '')
+	const [showImgCrop, setShowImgCrop] = useState(false)
 	const [newAvatarFile, setNewAvatarFile] = useState(null)
 	const [avatar, setAvatar] = useState(user.avatar || null)
 
-	const _setImg = (e) => {
+	const _setImg = async (e) => {
 		setNewAvatarFile(e.target.files[0])
+		setShowImgCrop(true)
+	}
+
+	const _submit = async () => {
+		const newData = {
+			userId: user.id,
+			avatar: avatar,
+			bio: bio,
+		}
+		if (newAvatarFile && newAvatarFile.imgFile) {
+			const skydata = await upload(newAvatarFile.imgFile)
+			newData.avatar = skydata
+		}
+		console.log(newData)
+		const response = await contractUpdateProfile(newData)
+		console.log(response)
 	}
 
 	return (
 		<div className="max-w-4xl m-auto px-4">
-			
-			{newAvatarFile && (
+			{showImgCrop && (
 				<ImgCrop
 					size={{
 						width: 900,
 						height: 1600,
 					}}
 					input={newAvatarFile}
-					left={(_) => setNewAvatarFile(null)}
+					left={(_) => setShowImgCrop(null)}
 					right={(res) => {
 						console.log(res)
 						setAvatar(res.body)
-						setNewAvatarFile(null)
+						setNewAvatarFile(res.payload)
+						setShowImgCrop(false)
 					}}
 				/>
 			)}
@@ -57,9 +75,9 @@ const ProfileEditPage = ({}) => {
 							<input
 								type="file"
 								accept="image/*"
-								onClick={(e) => {
-									e.target.value = null
-								}}
+								// onClick={(e) => {
+								// 	e.target.value = null
+								// }}
 								onChange={(e) => _setImg(e)}
 								className="w-full h-full absolute opacity-0 cursor-pointer"
 							/>
@@ -92,7 +110,10 @@ const ProfileEditPage = ({}) => {
 						/>
 					</div>
 					<div className="mt-8">
-						<button className="shadow-bold font-title px-6 py-2 bg-primary-color text-white focus:outline-none">
+						<button
+							onClick={_submit}
+							className="shadow-bold font-title px-6 py-2 bg-primary-color text-white focus:outline-none"
+						>
 							Save
 						</button>
 					</div>
