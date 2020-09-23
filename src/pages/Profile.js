@@ -19,7 +19,7 @@ const ProfilePage = () => {
 
 	return (
 		<div className="max-w-4xl m-auto px-4">
-			<Nav isLoggedIn={true} />
+			
 			<div className="flex flex-wrap -mx-4 py-8">
 				<div className="w-full md:w-1/3 px-4">
 					<div

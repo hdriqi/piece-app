@@ -29,7 +29,7 @@ const userList = [
 const ExplorePage = () => {
 	return (
 		<div className="max-w-4xl m-auto px-4">
-			<Nav isLoggedIn={true} />
+			
 			<div className="flex flex-wrap -mx-4">
 				{userList.map((user) => {
 					return (

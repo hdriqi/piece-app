@@ -1,7 +1,56 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import {
+	contractGetReward,
+	getAccountId,
+	getBalance,
+	isLoggedIn,
+	logout,
+} from '../near'
+import { prettyBalance } from '../utils'
 
-const Nav = ({ isLoggedIn }) => {
+const Nav = () => {
+	const accModalRef = useRef()
+	const [balance, setBalance] = useState(0)
+	const [reward, setReward] = useState(0)
+	const [showAccountModal, setShowAccountModal] = useState(false)
+
+	const _getBalance = async () => {
+		const balance = await getBalance()
+		setBalance(prettyBalance(balance.available, 24, 4))
+	}
+	const _getReward = async () => {
+		const reward = await contractGetReward({
+			userId: getAccountId(),
+		})
+		setReward(prettyBalance(reward, 24, 4))
+	}
+
+	const toggleAccountModal = () => {
+		setShowAccountModal(!showAccountModal)
+	}
+
+	useEffect(() => {
+		const onClickEv = (e) => {
+			if (!accModalRef.current.contains(e.target)) {
+				setShowAccountModal(false)
+			}
+		}
+
+		if (showAccountModal) {
+			document.body.addEventListener('click', onClickEv)
+		}
+
+		return () => {
+			document.body.removeEventListener('click', onClickEv)
+		}
+	}, [showAccountModal])
+
+	useEffect(() => {
+		_getBalance()
+		_getReward()
+	}, [])
+
 	return (
 		<nav className="flex items-center justify-between py-6">
 			<div className="flex items-center">
@@ -13,22 +62,54 @@ const Nav = ({ isLoggedIn }) => {
 				</Link>
 			</div>
 			<div className="flex items-center">
-				{isLoggedIn ? (
+				{isLoggedIn() ? (
 					<>
 						<div className="hidden md:block">
 							<h5 className="text-sm">Balance</h5>
-							<h4 className="font-title">100 Ⓝ</h4>
+							<h4 className="font-title">{balance} Ⓝ</h4>
 						</div>
 						<div className="hidden md:block ml-8">
 							<h5 className="text-sm">Reward</h5>
-							<h4 className="font-title">0.5 Ⓝ</h4>
+							<h4 className="font-title">{reward} Ⓝ</h4>
 						</div>
-						<div className="ml-8">
-							<h4>userid.testnet</h4>
+						<div ref={accModalRef} className="ml-8 relative">
+							<div className="flex items-center">
+								<h4 className="cursor-pointer font-bold" onClick={toggleAccountModal}>
+									{getAccountId()}
+								</h4>
+								<div className="ml-1">
+									<svg
+										width="12"
+										height="19"
+										viewBox="0 0 21 19"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											d="M20.7846 0.392303L10.3923 18.3923L0 0.392304L20.7846 0.392303Z"
+											fill="black"
+										/>
+									</svg>
+								</div>
+							</div>
+							{showAccountModal && (
+								<div className="absolute right-0 w-32 pt-4">
+									<div className="p-2 border-2 border-gray-700">
+										<Link onClick={toggleAccountModal} to="/me/edit">
+											<p>Edit Profile</p>
+										</Link>
+										<p onClick={logout} className="pt-2">
+											Logout
+										</p>
+									</div>
+								</div>
+							)}
 						</div>
 					</>
 				) : (
-					<h4 className="text-lg">Login</h4>
+					<Link to="/login">
+						<h4 className="text-lg">Login</h4>
+					</Link>
 				)}
 			</div>
 		</nav>
