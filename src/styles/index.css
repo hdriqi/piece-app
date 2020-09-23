@@ -1,9 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Limelight&display=swap');
+
 @tailwind base;
 
 @tailwind components;
 
 @tailwind utilities;
 
+html {
+	@apply font-body;
+}
+
 body {
-  @apply bg-black mt-40;
+	@apply bg-secondary-color;
 }
