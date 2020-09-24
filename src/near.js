@@ -1,4 +1,5 @@
 import { connect, Contract, keyStores, WalletConnection } from 'near-api-js'
+import { parseNearAmount } from 'near-api-js/lib/utils/format'
 import getConfig from './config'
 
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
@@ -46,7 +47,10 @@ export function login() {
 	// user's behalf.
 	// This works by creating a new access key for the user's account and storing
 	// the private key in localStorage.
-	window.walletConnection.requestSignIn(nearConfig.contractName, 'Piece Protocol')
+	window.walletConnection.requestSignIn(
+		nearConfig.contractName,
+		'Piece Protocol'
+	)
 }
 
 export function isLoggedIn() {
@@ -75,4 +79,8 @@ export function contractGetProfile(params) {
 
 export function contractGetProfileList(params) {
 	return window.contract.getProfileList(params)
+}
+
+export function contractPiece(params) {
+	return window.contract.piece(params, '100000000000000', parseNearAmount('5'))
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
-import { contractGetProfile } from '../near'
+import { contractGetProfile, contractPiece } from '../near'
 import { getImgUrl } from '../utils'
 
 const ProfilePage = () => {
@@ -14,6 +14,13 @@ const ProfilePage = () => {
 			userId: userId,
 		})
 		setUser(profileData)
+	}
+
+	const _piece = async () => {
+		const receiverId = params.userId
+		await contractPiece({
+			receiverId: receiverId
+		})
 	}
 
 	useEffect(() => {
@@ -51,7 +58,7 @@ const ProfilePage = () => {
 					<h1 className="font-title text-3xl">{user.id}</h1>
 					<p className="mt-4 whitespace-pre-line">{user.bio}</p>
 					<div className="hidden md:block mt-8">
-						<button className="shadow-bold font-title px-6 py-2 bg-primary-color text-white focus:outline-none">
+						<button onClick={_piece} className="shadow-bold font-title px-6 py-2 bg-primary-color text-white focus:outline-none">
 							Support 5 Ⓝ
 						</button>
 					</div>
@@ -60,7 +67,7 @@ const ProfilePage = () => {
 					<div className="w-full h-16"></div>
 					<div className="fixed bottom-0 left-0 right-0">
 						<div className="p-4">
-							<button className="w-full shadow-bold font-title px-6 py-2 bg-primary-color text-white focus:outline-none">
+							<button onClick={_piece} className="w-full shadow-bold font-title px-6 py-2 bg-primary-color text-white focus:outline-none">
 								Support 5 Ⓝ
 							</button>
 						</div>
