@@ -49,7 +49,7 @@ const ProfilePage = () => {
 				</div>
 				<div className="w-full md:w-2/3 px-4">
 					<h1 className="font-title text-3xl">{user.id}</h1>
-					<p className="mt-4">{user.bio}</p>
+					<p className="mt-4 whitespace-pre-line">{user.bio}</p>
 					<div className="hidden md:block mt-8">
 						<button className="shadow-bold font-title px-6 py-2 bg-primary-color text-white focus:outline-none">
 							Support 5 Ⓝ
