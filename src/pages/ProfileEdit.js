@@ -2,25 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import ImgCrop from '../components/ImgCrop'
 import Loading from '../components/Loading'
-import { contractUpdateProfile, isLoggedIn } from '../near'
+import { contractGetProfile, contractUpdateProfile, isLoggedIn } from '../near'
 import { upload } from '../skynet'
 import { useStore } from '../store'
+import { getImgUrl } from '../utils'
 
-let user = {
-	id: 'janedoe.testnet',
-	avatar:
-		'https://images.pexels.com/photos/4090852/pexels-photo-4090852.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-	bio:
-		'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-}
+// let user = {
+// 	id: 'janedoe.testnet',
+// 	avatar:
+// 		'https://images.pexels.com/photos/4090852/pexels-photo-4090852.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+// 	bio:
+// 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+// }
 
 const ProfileEditPage = ({}) => {
 	const { userId } = useStore((state) => state)
 	const history = useHistory()
-	const [bio, setBio] = useState(user.bio || '')
+	const [bio, setBio] = useState('')
 	const [showImgCrop, setShowImgCrop] = useState(false)
 	const [newAvatarFile, setNewAvatarFile] = useState(null)
-	const [avatar, setAvatar] = useState(user.avatar || null)
+	const [avatar, setAvatar] = useState('')
 	const [isSubmitting, setIsSubmitting] = useState(false)
 
 	const _setImg = async (e) => {
@@ -40,7 +41,6 @@ const ProfileEditPage = ({}) => {
 				const skydata = await upload(newAvatarFile.imgFile)
 				newData.avatar = skydata
 			}
-			console.log(newData)
 			const response = await contractUpdateProfile(newData)
 			console.log(response)
 		} catch (err) {
@@ -49,11 +49,22 @@ const ProfileEditPage = ({}) => {
 		setIsSubmitting(false)
 	}
 
+	const _getProfile = async (userId) => {
+		const profileData = await contractGetProfile({
+			userId: userId,
+		})
+		setAvatar(profileData.avatar)
+		setBio(profileData.bio)
+	}
+
 	useEffect(() => {
 		if (!isLoggedIn()) {
 			history.replace('/explore')
 		}
-	}, [])
+		if (userId) {
+			_getProfile(userId)
+		}
+	}, [userId])
 
 	return (
 		<div className="max-w-4xl m-auto px-4">
@@ -66,7 +77,6 @@ const ProfileEditPage = ({}) => {
 					input={newAvatarFile}
 					left={(_) => setShowImgCrop(null)}
 					right={(res) => {
-						console.log(res)
 						setAvatar(res.body)
 						setNewAvatarFile(res.payload)
 						setShowImgCrop(false)
@@ -82,7 +92,7 @@ const ProfileEditPage = ({}) => {
 						}}
 					>
 						<div className="absolute h-full w-full">
-							<img className="w-full h-full object-cover" src={avatar} />
+							<img className="w-full h-full object-cover" src={getImgUrl(avatar)} />
 						</div>
 						<div
 							className="absolute w-full h-full flex items-center justify-center opacity-50 hover:opacity-100"

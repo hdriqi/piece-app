@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { getImgUrl } from '../utils'
 
 const ProfileCard = ({ user }) => {
 	return (
 		<Link to={{
-      pathname:  `/${user.id}`,
+      pathname:  `/${user.userId}`,
       query: {
         user: user
       }
@@ -17,7 +18,7 @@ const ProfileCard = ({ user }) => {
 					}}
 				>
 					<div className="absolute h-full w-full">
-						<img className="w-full h-full object-cover" src={user.avatar} />
+						<img className="w-full h-full object-cover" src={getImgUrl(user.avatar)} />
 					</div>
 					<div
 						className="absolute h-full w-full"
@@ -27,7 +28,7 @@ const ProfileCard = ({ user }) => {
 					>
 						<div className="flex h-full items-end">
 							<div className="overflow-hidden p-2">
-								<h4 className="font-title text-primary-color">{user.id}</h4>
+								<h4 className="font-title text-primary-color">{user.userId}</h4>
 								<p className="truncate text-white text-sm">{user.bio}</p>
 							</div>
 						</div>

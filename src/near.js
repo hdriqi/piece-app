@@ -72,3 +72,7 @@ export function contractUpdateProfile(params) {
 export function contractGetProfile(params) {
 	return window.contract.getProfile(params)
 }
+
+export function contractGetProfileList(params) {
+	return window.contract.getProfileList(params)
+}
