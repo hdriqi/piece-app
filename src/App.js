@@ -13,6 +13,7 @@ import LoginPage from './pages/Login'
 import Nav from './components/Nav'
 import { useStore } from './store'
 import { isLoggedIn, getAccountId, contractGetProfile, contractUpdateProfile } from './near'
+import ProfileRewardPage from './pages/ProfileReward'
 
 export default function App() {
 	const { userId, setUserId } = useStore((state) => state)
@@ -52,6 +53,9 @@ export default function App() {
 				</Route>
 				<Route path="/explore" exact>
 					<ExplorePage />
+				</Route>
+				<Route path="/me/reward" exact>
+					<ProfileRewardPage />
 				</Route>
 				<Route path="/me/edit" exact>
 					<ProfileEditPage />

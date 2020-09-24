@@ -69,6 +69,10 @@ export function contractGetReward(params) {
 	return window.contract.getReward(params)
 }
 
+export function contractClaimReward() {
+	return window.contract.claimReward()
+}
+
 export function contractUpdateProfile(params) {
 	return window.contract.updateProfile(params)
 }

@@ -12,21 +12,25 @@ import { prettyBalance } from '../utils'
 
 const Nav = () => {
 	const accModalRef = useRef()
-	const { setUserId, userBalance, setBalance, userReward, setReward } = useStore(
-		(state) => state
-	)
+	const {
+		setUserId,
+		userBalance,
+		setBalance,
+		userReward,
+		setReward,
+	} = useStore((state) => state)
 	const [showAccountModal, setShowAccountModal] = useState(false)
 
 	const _getBalance = async () => {
 		const balance = await getBalance()
-		setBalance(prettyBalance(balance.available, 24, 4))
+		setBalance(balance.available)
 	}
 
 	const _getReward = async () => {
 		const reward = await contractGetReward({
 			userId: getAccountId(),
 		})
-		setReward(prettyBalance(reward, 24, 4))
+		setReward(reward)
 	}
 
 	const _logout = () => {
@@ -74,11 +78,17 @@ const Nav = () => {
 					<>
 						<div className="hidden md:block">
 							<h5 className="text-sm">Balance</h5>
-							<h4 className="font-title">{userBalance} Ⓝ</h4>
+							<h4 className="font-title">
+								{prettyBalance(userBalance, 24, 4)} Ⓝ
+							</h4>
 						</div>
 						<div className="hidden md:block ml-8">
-							<h5 className="text-sm">Reward</h5>
-							<h4 className="font-title">{userReward} Ⓝ</h4>
+							<Link to="/me/reward">
+								<h5 className="text-sm">Reward</h5>
+								<h4 className="font-title">
+									{prettyBalance(userReward, 24, 4)} Ⓝ
+								</h4>
+							</Link>
 						</div>
 						<div ref={accModalRef} className="ml-8 relative">
 							<div className="flex items-center">
