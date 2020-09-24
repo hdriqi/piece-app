@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import ImgCrop from '../components/ImgCrop'
-import { contractUpdateProfile } from '../near'
+import Loading from '../components/Loading'
+import { contractUpdateProfile, isLoggedIn } from '../near'
 import { upload } from '../skynet'
+import { useStore } from '../store'
 
 let user = {
 	id: 'janedoe.testnet',
@@ -12,10 +15,13 @@ let user = {
 }
 
 const ProfileEditPage = ({}) => {
+	const { userId } = useStore((state) => state)
+	const history = useHistory()
 	const [bio, setBio] = useState(user.bio || '')
 	const [showImgCrop, setShowImgCrop] = useState(false)
 	const [newAvatarFile, setNewAvatarFile] = useState(null)
 	const [avatar, setAvatar] = useState(user.avatar || null)
+	const [isSubmitting, setIsSubmitting] = useState(false)
 
 	const _setImg = async (e) => {
 		setNewAvatarFile(e.target.files[0])
@@ -23,19 +29,31 @@ const ProfileEditPage = ({}) => {
 	}
 
 	const _submit = async () => {
+		setIsSubmitting(true)
 		const newData = {
-			userId: user.id,
+			userId: userId,
 			avatar: avatar,
 			bio: bio,
 		}
-		if (newAvatarFile && newAvatarFile.imgFile) {
-			const skydata = await upload(newAvatarFile.imgFile)
-			newData.avatar = skydata
+		try {
+			if (newAvatarFile && newAvatarFile.imgFile) {
+				const skydata = await upload(newAvatarFile.imgFile)
+				newData.avatar = skydata
+			}
+			console.log(newData)
+			const response = await contractUpdateProfile(newData)
+			console.log(response)
+		} catch (err) {
+			console.log(err)
 		}
-		console.log(newData)
-		const response = await contractUpdateProfile(newData)
-		console.log(response)
+		setIsSubmitting(false)
 	}
+
+	useEffect(() => {
+		if (!isLoggedIn()) {
+			history.replace('/explore')
+		}
+	}, [])
 
 	return (
 		<div className="max-w-4xl m-auto px-4">
@@ -75,9 +93,9 @@ const ProfileEditPage = ({}) => {
 							<input
 								type="file"
 								accept="image/*"
-								// onClick={(e) => {
-								// 	e.target.value = null
-								// }}
+								onClick={(e) => {
+									e.target.value = null
+								}}
 								onChange={(e) => _setImg(e)}
 								className="w-full h-full absolute opacity-0 cursor-pointer"
 							/>
@@ -112,9 +130,17 @@ const ProfileEditPage = ({}) => {
 					<div className="mt-8">
 						<button
 							onClick={_submit}
+							disabled={isSubmitting}
 							className="shadow-bold font-title px-6 py-2 bg-primary-color text-white focus:outline-none"
 						>
-							Save
+							{!isSubmitting ? (
+								<p>Save</p>
+							) : (
+								<div className="flex items-center">
+									<p className="mr-2">Saving</p>
+									<Loading />
+								</div>
+							)}
 						</button>
 					</div>
 				</div>

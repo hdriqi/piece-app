@@ -39,7 +39,8 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.5",
-    "skynet-js": "^2.0.4"
+    "skynet-js": "^2.0.4",
+    "zustand": "^3.1.2"
   },
   "jest": {
     "moduleNameMapper": {

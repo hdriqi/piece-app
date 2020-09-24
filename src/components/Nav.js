@@ -7,23 +7,31 @@ import {
 	isLoggedIn,
 	logout,
 } from '../near'
+import { useStore } from '../store'
 import { prettyBalance } from '../utils'
 
 const Nav = () => {
 	const accModalRef = useRef()
-	const [balance, setBalance] = useState(0)
-	const [reward, setReward] = useState(0)
+	const { setUserId, userBalance, setBalance, userReward, setReward } = useStore(
+		(state) => state
+	)
 	const [showAccountModal, setShowAccountModal] = useState(false)
 
 	const _getBalance = async () => {
 		const balance = await getBalance()
 		setBalance(prettyBalance(balance.available, 24, 4))
 	}
+
 	const _getReward = async () => {
 		const reward = await contractGetReward({
 			userId: getAccountId(),
 		})
 		setReward(prettyBalance(reward, 24, 4))
+	}
+
+	const _logout = () => {
+		logout()
+		setUserId(null)
 	}
 
 	const toggleAccountModal = () => {
@@ -66,15 +74,18 @@ const Nav = () => {
 					<>
 						<div className="hidden md:block">
 							<h5 className="text-sm">Balance</h5>
-							<h4 className="font-title">{balance} Ⓝ</h4>
+							<h4 className="font-title">{userBalance} Ⓝ</h4>
 						</div>
 						<div className="hidden md:block ml-8">
 							<h5 className="text-sm">Reward</h5>
-							<h4 className="font-title">{reward} Ⓝ</h4>
+							<h4 className="font-title">{userReward} Ⓝ</h4>
 						</div>
 						<div ref={accModalRef} className="ml-8 relative">
 							<div className="flex items-center">
-								<h4 className="cursor-pointer font-bold" onClick={toggleAccountModal}>
+								<h4
+									className="cursor-pointer font-bold"
+									onClick={toggleAccountModal}
+								>
 									{getAccountId()}
 								</h4>
 								<div className="ml-1">
@@ -98,7 +109,7 @@ const Nav = () => {
 										<Link onClick={toggleAccountModal} to="/me/edit">
 											<p>Edit Profile</p>
 										</Link>
-										<p onClick={logout} className="pt-2">
+										<p onClick={_logout} className="pt-2">
 											Logout
 										</p>
 									</div>

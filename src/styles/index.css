@@ -21,3 +21,41 @@ textarea {
 textarea:focus {
 	@apply outline-none;
 }
+
+button:disabled {
+	@apply opacity-75 cursor-not-allowed;
+}
+
+@keyframes loading-child {
+  0% { transform: translate(-50%,-50%) rotate(0deg); }
+  100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+.loading-child div {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ffffff;
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+.loading-child div {
+  animation: loading-child 1s linear infinite;
+  top: 10px;
+  left: 10px
+}
+.loading {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  overflow: hidden;
+  background: none;
+}
+.loading-child {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.loading-child div { box-sizing: content-box; }

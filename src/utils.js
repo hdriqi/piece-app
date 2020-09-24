@@ -8,3 +8,11 @@ export const prettyBalance = (balance, decimals = 18, len = 8) => {
 	const formattedHead = head.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 	return `${formattedHead}.${tail}`
 }
+
+export const getImgUrl = (url) => {
+	const [protocol, link] = url
+	if (protocol === 'sia') {
+		return `https://siasky.net/${link}`
+	}
+	return url
+}
