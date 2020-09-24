@@ -12,14 +12,29 @@ import ProfileEditPage from './pages/ProfileEdit'
 import LoginPage from './pages/Login'
 import Nav from './components/Nav'
 import { useStore } from './store'
-import { isLoggedIn, getAccountId } from './near'
+import { isLoggedIn, getAccountId, contractGetProfile, contractUpdateProfile } from './near'
 
 export default function App() {
 	const { userId, setUserId } = useStore((state) => state)
 
+	const _checkProfile = async (userId) => {
+		const profileData = await contractGetProfile({
+			userId: userId,
+		})
+		if (!profileData) {
+			const newUser = {
+				userId: getAccountId(),
+				avatar: 'sia://JACbx1WBFbtWwDu6aXoL5wLb-X9F9q2oL1IFqcJmMS4suw',
+				bio: 'User of Piece'
+			}
+			await contractUpdateProfile(newUser)
+		}
+	}
+
 	useEffect(() => {
 		if (!userId && isLoggedIn()) {
 			setUserId(getAccountId())
+			_checkProfile(getAccountId())
 		}
 	}, [userId])
 
