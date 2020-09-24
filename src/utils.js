@@ -10,7 +10,7 @@ export const prettyBalance = (balance, decimals = 18, len = 8) => {
 }
 
 export const getImgUrl = (url) => {
-	const [protocol, link] = url
+	const [protocol, link] = url.split('://')
 	if (protocol === 'sia') {
 		return `https://siasky.net/${link}`
 	}
