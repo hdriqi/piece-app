@@ -18,9 +18,16 @@ const ProfilePage = () => {
 
 	const _piece = async () => {
 		const receiverId = params.userId
-		await contractPiece({
-			receiverId: receiverId
-		})
+		try {
+			await contractPiece({
+				receiverId: receiverId
+			})
+		} catch (err) {
+			console.log(err)
+			if(err.message.includes('Cannot find matching key for transaction sent')) {
+				alert('Please login to support this creator')
+			}
+		}
 	}
 
 	useEffect(() => {
@@ -58,6 +65,9 @@ const ProfilePage = () => {
 					<h1 className="font-title text-3xl">{user.id}</h1>
 					<p className="mt-4 whitespace-pre-line">{user.bio}</p>
 					<div className="hidden md:block mt-8">
+						{
+
+						}
 						<button onClick={_piece} className="shadow-bold font-title px-6 py-2 bg-primary-color text-white focus:outline-none">
 							Support 5 Ⓝ
 						</button>
