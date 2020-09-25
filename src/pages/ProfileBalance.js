@@ -38,7 +38,7 @@ const ProfileBalancePage = () => {
 				<div className="text-center">
 					<h4>My Balance</h4>
 					<h2 className="font-title text-2xl">
-						{prettyBalance(userBalance, 24, 4)} Ⓝ
+						{prettyBalance(userBalance, 24, 8)} Ⓝ
 					</h2>
 				</div>
 			</div>

@@ -6,7 +6,7 @@ const Activity = ({ data }) => {
 	return (
 		<>
 			<p>
-				Receive <b>{prettyBalance(data.value, 24, 4)}</b> from{' '}
+				Receive <b>{prettyBalance(data.value, 24, 8)}</b> Ⓝ from{' '}
 				<Link to={`/${data.from}`}>
 					<b>{data.from}</b>
 				</Link>{' '}

@@ -64,7 +64,7 @@ const ProfileRewardPage = () => {
 				<div className="text-center">
 					<h4>My Reward</h4>
 					<h2 className="font-title text-2xl">
-						{prettyBalance(userReward, 24, 4)} Ⓝ
+						{prettyBalance(userReward, 24, 8)} Ⓝ
 					</h2>
 					<button
 						disabled={isSubmitting || userReward == 0}
