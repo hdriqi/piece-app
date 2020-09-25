@@ -129,7 +129,7 @@ const ProfileEditPage = ({}) => {
 							type="text"
 							value={bio}
 							onChange={(e) => setBio(e.target.value)}
-							className="mt-2 w-full h-32 p-2 bg-transparent border-2 border-gray-700 focus:border-black"
+							className="mt-2 w-full h-32 p-2 bg-transparent border-2 border-gray-800 focus:border-black"
 							placeholder="Write about you"
 						/>
 					</div>

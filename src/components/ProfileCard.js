@@ -18,7 +18,7 @@ const ProfileCard = ({ user }) => {
 					}}
 				>
 					<div className="absolute h-full w-full">
-						<img className="w-full h-full object-cover" src={getImgUrl(user.avatar)} />
+						<img className="w-full h-full object-cover bg-black" src={getImgUrl(user.avatar)} />
 					</div>
 					<div
 						className="absolute h-full w-full"

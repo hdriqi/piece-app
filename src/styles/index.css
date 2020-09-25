@@ -11,7 +11,7 @@ html {
 }
 
 body {
-	@apply bg-secondary-color;
+	@apply bg-tertiary-color;
 }
 
 textarea {
@@ -29,4 +29,13 @@ button:disabled {
 @keyframes loading-spinner {
   0% { transform: translate(-50%,-50%) rotate(0deg); }
   100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+@keyframes up-down {
+  0%, 100% {
+    transform: translate3d(0,0,0);
+  }
+  50% {
+    transform: translate3d(0,4px,0);
+  }
 }

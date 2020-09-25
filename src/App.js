@@ -12,9 +12,15 @@ import ProfileEditPage from './pages/ProfileEdit'
 import LoginPage from './pages/Login'
 import Nav from './components/Nav'
 import { useStore } from './store'
-import { isLoggedIn, getAccountId, contractGetProfile, contractUpdateProfile } from './near'
+import {
+	isLoggedIn,
+	getAccountId,
+	contractGetProfile,
+	contractUpdateProfile,
+} from './near'
 import ProfileRewardPage from './pages/ProfileReward'
 import ProfileBalancePage from './pages/ProfileBalance'
+import Footer from './components/Footer'
 
 export default function App() {
 	const { userId, setUserId } = useStore((state) => state)
@@ -27,7 +33,7 @@ export default function App() {
 			const newUser = {
 				userId: getAccountId(),
 				avatar: 'sia://JACbx1WBFbtWwDu6aXoL5wLb-X9F9q2oL1IFqcJmMS4suw',
-				bio: 'User of Piece'
+				bio: 'User of Piece',
 			}
 			await contractUpdateProfile(newUser)
 		}
@@ -68,6 +74,9 @@ export default function App() {
 					<ProfilePage />
 				</Route>
 			</Switch>
+			<div className="max-w-4xl m-auto p-4">
+				<Footer />
+			</div>
 		</BrowserRouter>
 	)
 }

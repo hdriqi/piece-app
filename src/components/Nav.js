@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import {
 	contractGetReward,
 	getAccountId,
@@ -12,6 +12,8 @@ import { prettyBalance } from '../utils'
 
 const Nav = () => {
 	const accModalRef = useRef()
+	const location = useLocation()
+
 	const {
 		setUserId,
 		userBalance,
@@ -70,7 +72,9 @@ const Nav = () => {
 					<h3 className="font-title">PIECE</h3>
 				</Link>
 				<Link to="/explore">
-					<h4 className="text-lg ml-8">Explore</h4>
+					<h4 className="font-bold text-lg ml-8">
+						<p className={`${location.pathname === '/explore' && 'underline'}`}>Explore</p>
+					</h4>
 				</Link>
 			</div>
 			<div className="flex items-center">
@@ -117,11 +121,11 @@ const Nav = () => {
 							</div>
 							{showAccountModal && (
 								<div className="absolute right-0 w-32 pt-4 z-10">
-									<div className="px-2 pb-2 border-2 border-gray-700 bg-secondary-color">
+									<div className="px-2 pb-2 border-2 border-gray-800 bg-tertiary-color">
 										<Link onClick={toggleAccountModal} to="/me/edit">
-											<p className="pt-2 text-gray-700 hover:text-black">Edit Profile</p>
+											<p className="pt-2 text-gray-800 hover:text-black">Edit Profile</p>
 										</Link>
-										<p onClick={_logout} className="cursor-pointer pt-2 text-gray-700 hover:text-black">
+										<p onClick={_logout} className="cursor-pointer pt-2 text-gray-800 hover:text-black">
 											Logout
 										</p>
 									</div>

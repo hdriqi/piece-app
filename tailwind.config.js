@@ -12,7 +12,8 @@ module.exports = {
 		extend: {
 			colors: {
 				'primary-color': '#F52D3A',
-				'secondary-color': '#F7F4ED',
+				'secondary-color': '#FFBC29',
+				'tertiary-color': '#F7F4ED',
 			},
 			boxShadow: {
 				'bold': '4px 4px 0px #000000;'

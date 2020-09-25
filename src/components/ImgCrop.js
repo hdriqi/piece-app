@@ -134,7 +134,7 @@ const ImgCrop = ({
 				rightText="Discard"
 			/> */}
 			<div className="max-w-sm m-auto p-4 w-full">
-				<div className="bg-secondary-color w-full rounded-md overflow-hidden">
+				<div className="bg-tertiary-color w-full rounded-md overflow-hidden">
 					<div className="flex justify-between items-center w-full h-12 bg-dark-12 px-2">
 						<div className="w-8 flex items-center">
 							<button onClick={(_) => _left()}>
