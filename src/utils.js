@@ -1,3 +1,10 @@
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+
+TimeAgo.addLocale(en)
+
+const timeAgo = new TimeAgo('en-US')
+
 export const prettyBalance = (balance, decimals = 18, len = 8) => {
 	const diff = balance.toString().length - (10 ** decimals).toString().length
 	const fixedPoint = Math.max(1, Math.min(len, len - diff))
@@ -15,4 +22,8 @@ export const getImgUrl = (url) => {
 		return `https://siasky.net/${link}`
 	}
 	return url
+}
+
+export const parseDateTime = (timestamp) => {
+	return timeAgo.format(new Date(timestamp))
 }

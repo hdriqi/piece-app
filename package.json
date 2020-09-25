@@ -33,6 +33,7 @@
   "dependencies": {
     "autoprefixer": "^10.0.0",
     "croppie": "^2.6.5",
+    "javascript-time-ago": "^2.0.13",
     "jsbi": "^3.1.4",
     "near-api-js": "^0.29.0",
     "postcss-cli": "^8.0.0",
