@@ -1,6 +1,6 @@
 import 'regenerator-runtime/runtime'
 import React, { useEffect } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 
 import './styles/tailwind.css'
 import 'croppie/croppie.css'
@@ -47,7 +47,7 @@ export default function App() {
 	}, [userId])
 
 	return (
-		<BrowserRouter>
+		<Router>
 			<div className="max-w-4xl m-auto p-4">
 				<Nav />
 			</div>
@@ -77,6 +77,6 @@ export default function App() {
 			<div className="max-w-4xl m-auto p-4">
 				<Footer />
 			</div>
-		</BrowserRouter>
+		</Router>
 	)
 }

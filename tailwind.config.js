@@ -3,7 +3,7 @@ module.exports = {
 		removeDeprecatedGapUtilities: true,
 		purgeLayersByDefault: true,
 	},
-	purge: [],
+	purge: ['./src/**/*.html', './src/**/*.js'],
 	theme: {
 		fontFamily: {
 			title: ['Limelight', 'cursive'],
@@ -16,8 +16,8 @@ module.exports = {
 				'tertiary-color': '#F7F4ED',
 			},
 			boxShadow: {
-				'bold': '4px 4px 0px #000000;'
-			}
+				bold: '4px 4px 0px #000000;',
+			},
 		},
 	},
 	variants: {},
