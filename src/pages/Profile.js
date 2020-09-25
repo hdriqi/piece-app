@@ -62,7 +62,7 @@ const ProfilePage = () => {
 					</div>
 				</div>
 				<div className="w-full md:w-2/3 px-4">
-					<h1 className="font-title text-3xl">{user.id}</h1>
+					<h1 className="font-title text-3xl">{user.userId}</h1>
 					<p className="mt-4 whitespace-pre-line">{user.bio}</p>
 					<div className="hidden md:block mt-8">
 						{
