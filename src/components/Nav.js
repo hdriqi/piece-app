@@ -77,10 +77,12 @@ const Nav = () => {
 				{isLoggedIn() ? (
 					<>
 						<div className="hidden md:block">
-							<h5 className="text-sm">Balance</h5>
-							<h4 className="font-title">
-								{prettyBalance(userBalance, 24, 4)} Ⓝ
-							</h4>
+							<Link to="/me/balance">
+								<h5 className="text-sm">Balance</h5>
+								<h4 className="font-title">
+									{prettyBalance(userBalance, 24, 4)} Ⓝ
+								</h4>
+							</Link>
 						</div>
 						<div className="hidden md:block ml-8">
 							<Link to="/me/reward">

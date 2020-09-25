@@ -95,6 +95,10 @@ export function contractGetRewardActivityList(params) {
 	return window.contract.getRewardActivityList(params)
 }
 
+export function contractGetBalanceActivityList(params) {
+	return window.contract.getBalanceActivityList(params)
+}
+
 export function contractPiece(params) {
 	return window.contract.piece(params, '100000000000000', parseNearAmount('5'))
 }

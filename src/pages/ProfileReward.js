@@ -1,10 +1,10 @@
 import JSBI from 'jsbi'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import Activity from '../components/Activity'
 import Loading from '../components/Loading'
 import { contractClaimReward, contractGetRewardActivityList } from '../near'
 import { useStore } from '../store'
-import { parseDateTime, prettyBalance } from '../utils'
+import { prettyBalance } from '../utils'
 
 const ProfileRewardPage = () => {
 	const { userId, userBalance, setBalance, userReward, setReward } = useStore(
@@ -47,6 +47,7 @@ const ProfileRewardPage = () => {
 		<div className="max-w-4xl m-auto px-4">
 			<div className="flex items-center justify-center">
 				<div className="text-center">
+					<h4>My Reward</h4>
 					<h2 className="font-title text-2xl">
 						{prettyBalance(userReward, 24, 4)} Ⓝ
 					</h2>
@@ -71,8 +72,7 @@ const ProfileRewardPage = () => {
 				{activityList.map((act, idx) => {
 					return (
 						<div key={idx} className="mt-4">
-							<p>Receive <b>{prettyBalance(act.value, 24, 4)}</b> from <Link to={`/${act.from}`}><b>{act.from}</b></Link> </p>
-							<p className="text-sm text-gray-800">{parseDateTime(act.createdAt / 10 ** 6)}</p>
+							<Activity data={act} />
 						</div>
 					)
 				})}

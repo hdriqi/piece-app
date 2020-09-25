@@ -1,5 +1,6 @@
 import React from 'react'
-import { parseDateTime } from '../utils'
+import { Link } from 'react-router-dom'
+import { parseDateTime, prettyBalance } from '../utils'
 
 const Activity = ({ data }) => {
 	return (
