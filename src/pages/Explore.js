@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import InfiniteScroll from 'react-infinite-scroll-component'
+import InfiniteScroll from 'react-infinite-scroller'
 import Loading from '../components/Loading'
 import ProfileCard from '../components/ProfileCard'
 import { contractGetProfileList } from '../near'
@@ -8,8 +8,13 @@ const ExplorePage = () => {
 	const [userList, setUserList] = useState([])
 	const [page, setPage] = useState(0)
 	const [hasMore, setHasMore] = useState(true)
+	const [isLoading, setIsLoading] = useState(false)
 
 	const _getProfileList = async () => {
+		if (isLoading) {
+			return
+		}
+		setIsLoading(true)
 		const profileList = await contractGetProfileList({
 			page: page,
 		})
@@ -19,6 +24,7 @@ const ExplorePage = () => {
 		if (profileList.length === 0 || profileList.length < 8) {
 			setHasMore(false)
 		}
+		setIsLoading(false)
 	}
 
 	useEffect(() => {
@@ -28,11 +34,7 @@ const ExplorePage = () => {
 	return (
 		<div className="max-w-4xl m-auto px-4">
 			<InfiniteScroll
-				style={{
-					overflowX: 'hidden'
-				}}
-				dataLength={userList.length}
-				next={_getProfileList}
+				loadMore={_getProfileList}
 				hasMore={hasMore}
 				loader={
 					<div className="flex items-center justify-center">

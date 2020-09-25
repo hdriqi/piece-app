@@ -1,5 +1,6 @@
 import JSBI from 'jsbi'
 import React, { useEffect, useState } from 'react'
+import InfiniteScroll from 'react-infinite-scroller'
 import Activity from '../components/Activity'
 import Loading from '../components/Loading'
 import { contractClaimReward, contractGetRewardActivityList } from '../near'
@@ -13,14 +14,28 @@ const ProfileRewardPage = () => {
 
 	const [activityList, setActivityList] = useState([])
 	const [isSubmitting, setIsSubmitting] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
+	const [page, setPage] = useState(0)
+	const [hasMore, setHasMore] = useState(true)
 
 	const _getRewardActivityList = async () => {
+		if (isLoading) {
+			return
+		}
+		setIsLoading(true)
 		const rewardActivityList = await contractGetRewardActivityList({
 			userId: userId,
 			page: 0,
 		})
-    setActivityList(rewardActivityList)
+		const newRewardActivityList = [...activityList].concat(rewardActivityList)
+		setActivityList(newRewardActivityList)
+		setPage(page + 1)
+		if (rewardActivityList.length < 8) {
+			setHasMore(false)
+		}
+		setIsLoading(false)
 	}
+
 	useEffect(() => {
 		if (userId) {
 			_getRewardActivityList()
@@ -52,7 +67,7 @@ const ProfileRewardPage = () => {
 						{prettyBalance(userReward, 24, 4)} Ⓝ
 					</h2>
 					<button
-						disabled={isSubmitting}
+						disabled={isSubmitting || userReward == 0}
 						onClick={_claim}
 						className="mt-4 shadow-bold font-title px-6 py-2 bg-primary-color text-white focus:outline-none"
 					>
@@ -69,13 +84,25 @@ const ProfileRewardPage = () => {
 			</div>
 			<div className="pt-16 max-w-sm m-auto">
 				<h3 className="font-title text-2xl">Activity</h3>
-				{activityList.map((act, idx) => {
-					return (
-						<div key={idx} className="mt-4">
-							<Activity data={act} />
-						</div>
-					)
-				})}
+				{userId && (
+					<InfiniteScroll
+						loadMore={_getRewardActivityList}
+						hasMore={hasMore}
+						loader={
+							<div className="flex items-center justify-center">
+								<Loading size={40} color={'#4a5568'} />
+							</div>
+						}
+					>
+						{activityList.map((act, idx) => {
+							return (
+								<div key={idx} className="mt-4">
+									<Activity data={act} />
+								</div>
+							)
+						})}
+					</InfiniteScroll>
+				)}
 			</div>
 		</div>
 	)
