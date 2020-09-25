@@ -73,7 +73,9 @@ const Nav = () => {
 				</Link>
 				<Link to="/explore">
 					<h4 className="font-bold text-lg ml-8">
-						<p className={`${location.pathname === '/explore' && 'underline'}`}>Explore</p>
+						<p className={`${location.pathname === '/explore' && 'underline'}`}>
+							Explore
+						</p>
 					</h4>
 				</Link>
 			</div>
@@ -122,10 +124,33 @@ const Nav = () => {
 							{showAccountModal && (
 								<div className="absolute right-0 w-32 pt-4 z-10">
 									<div className="px-2 pb-2 border-2 border-gray-800 bg-tertiary-color">
+										<div className="md:hidden">
+											<div className="pt-2">
+												<Link onClick={toggleAccountModal} to="/me/balance">
+													<h5 className="text-sm">Balance</h5>
+													<h4 className="font-title">
+														{prettyBalance(userBalance, 24, 4)} Ⓝ
+													</h4>
+												</Link>
+											</div>
+											<div className="pt-2">
+												<Link onClick={toggleAccountModal} to="/me/reward">
+													<h5 className="text-sm">Reward</h5>
+													<h4 className="font-title">
+														{prettyBalance(userReward, 24, 4)} Ⓝ
+													</h4>
+												</Link>
+											</div>
+										</div>
 										<Link onClick={toggleAccountModal} to="/me/edit">
-											<p className="pt-2 text-gray-800 hover:text-black">Edit Profile</p>
+											<p className="pt-2 text-gray-800 hover:text-black">
+												Edit Profile
+											</p>
 										</Link>
-										<p onClick={_logout} className="cursor-pointer pt-2 text-gray-800 hover:text-black">
+										<p
+											onClick={_logout}
+											className="cursor-pointer pt-2 text-gray-800 hover:text-black"
+										>
 											Logout
 										</p>
 									</div>
