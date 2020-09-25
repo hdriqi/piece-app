@@ -116,12 +116,12 @@ const Nav = () => {
 								</div>
 							</div>
 							{showAccountModal && (
-								<div className="absolute right-0 w-32 pt-4">
-									<div className="p-2 border-2 border-gray-700">
+								<div className="absolute right-0 w-32 pt-4 z-10">
+									<div className="p-2 border-2 border-gray-700 bg-secondary-color">
 										<Link onClick={toggleAccountModal} to="/me/edit">
 											<p>Edit Profile</p>
 										</Link>
-										<p onClick={_logout} className="pt-2">
+										<p className="cursor-pointer" onClick={_logout} className="pt-2">
 											Logout
 										</p>
 									</div>
