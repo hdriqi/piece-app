@@ -3,9 +3,11 @@ Piece Interface
 
 An incentivized protocol both for creators and supporters.
 
+[Try Piece on Sia](https://siasky.net/_AUBQQJF4mYSB2iqUx30ZA6U4iAMmezZDFeVMERZXXAXZQ)
 
-Demo
-====
+
+Video Demo
+==========
 
 [<img src="https://i.ibb.co/TtDZfms/5f7324b0dd22apiece-thumbnail.png">](https://www.loom.com/share/af2f558cdd2b43e9a8dae1a5d968447f)
 
