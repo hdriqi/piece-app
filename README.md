@@ -4,6 +4,12 @@ Piece Interface
 An incentivized protocol both for creators and supporters.
 
 
+Demo
+====
+
+[<img src="https://i.ibb.co/TtDZfms/5f7324b0dd22apiece-thumbnail.png">](https://www.loom.com/share/af2f558cdd2b43e9a8dae1a5d968447f)
+
+
 Quick Start
 ===========
 
@@ -18,6 +24,8 @@ To run this project locally:
 Smart Contract
 ==============
 
-The smart contract was deployed at dev-v1.piece.testnet.
-The source code for the smart contract can be found at https://github.com/hdriqi/piece-protocol. 
+The smart contract was deployed at [dev-v1.piece.testnet](https://explorer.testnet.near.org/accounts/dev-v1.piece.testnet).
+
+You can read the source code for the smart contract [here](https://github.com/hdriqi/piece-protocol). 
+
 
