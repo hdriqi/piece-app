@@ -1,9 +1,10 @@
 Piece Interface
 ==================
 
-An incentivized protocol both for creators and supporters.
+The interface for Piece Protocol, An incentivized protocol both for creators and supporters. Piece Protocol is built on top of NEAR blockchain and Sia decentralized storage. 
 
 [Try Piece on Sia](https://siasky.net/_AUBQQJF4mYSB2iqUx30ZA6U4iAMmezZDFeVMERZXXAXZQ)
+
 
 
 Video Demo
